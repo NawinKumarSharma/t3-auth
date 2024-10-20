@@ -5,9 +5,11 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
-import DiscordProvider from "next-auth/providers/discord";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import CredentialsProvider from "next-auth/providers/credentials";
+import Credentials from "next-auth/providers/credentials"
+import bcrypt from "bcrypt"
 
 import { env } from "~/env";
 import { db } from "~/server/db";
@@ -62,6 +64,38 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
+    Credentials({
+      name: "credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials) {
+        if(!credentials?.email || !credentials?.password){
+          throw new Error("Missing credentials");
+        }
+
+        const user = await db.user.findFirst({
+          where: {
+            email: credentials.email
+          }
+        });
+
+        if(!user?.id || !user.hashedPassword){
+          throw new Error("Invalid credentials");
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        const correctPassword = await bcrypt.compare(credentials.password, user.hashedPassword);
+
+        if(!correctPassword){
+          throw new Error("Invalid credentials");
+        }
+
+        return user;
+      },
+    })
+
     /**
      * ...add more providers here.
      *
@@ -72,6 +106,10 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt"
+  },
 };
 
 /**
