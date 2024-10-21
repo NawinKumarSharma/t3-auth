@@ -13,6 +13,7 @@ The goal of this project is to create a simple credential-based authentication s
 - **tRPC**
 - **Prisma ORM**
 - **NextAuth.js**
+- **Shadcn**
 - **Tailwind CSS**
 
 
@@ -48,4 +49,7 @@ pnpm db:migrate
 pnpm db:push
 ```
 
-### 4. 
+### 4. Run the application
+```bash
+pnpm run dev
+```
