@@ -1,29 +1,51 @@
-# Create T3 App
+# Credential-Based Authentication with NextAuth.js in a T3 Stack
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This repository implements a user authentication system using **NextAuth.js** with credentials (sign-in and sign-up) along with google and github authentication in a **T3 stack** application. It utilizes **Prisma ORM** for database operations and session storage.
 
-## What's next? How do I make an app with this?
+## Objective
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+The goal of this project is to create a simple credential-based authentication system where users can sign up and log in using their email and password, with user data and session information being managed using **Prisma ORM**.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Tech Stack
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- **Next.js**
+- **TypeScript**
+- **tRPC**
+- **Prisma ORM**
+- **NextAuth.js**
+- **Tailwind CSS**
 
-## Learn More
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Project Setup
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+### 1. Clone the Repository
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+```bash
+git clone <your-repository-url>
+cd <your-project-folder>
+pnpm install
+```
+### 2.Setup DATABASE_URL
+NEXTAUTH_SECRET=<Randomly generated secret>
+NEXTAUTH_URL=http://localhost:3000
+```bash
+DATABASE_URL="postgresql://postgres:password@localhost:5432/t3-auth"
+OR you can use from neon.tech
+NEXTAUTH_SECRET=<Randomly generated secret>
+NEXTAUTH_URL=http://localhost:3000
+DISCORD_CLIENT_ID=""
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
 
-## How do I deploy this?
+NEXTAUTH_SECRET=
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```
+### 3.prisma setup
+```bash
+pnpm db:migrate
+pnpm db:push
+```
+
+### 4. 
