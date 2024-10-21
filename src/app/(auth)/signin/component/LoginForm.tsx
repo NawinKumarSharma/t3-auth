@@ -1,11 +1,13 @@
 "use client"
 
 import { signIn, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import Input from '~/components/ui/input';
 
 export default function LoginForm() {
+const router = useRouter();
 
   useEffect(() => {
     void signOut({
@@ -26,8 +28,8 @@ export default function LoginForm() {
     });
 
     if(login?.ok){
+      router.push("/dashboard");
       toast.success("Correct login");
-      window.location.assign("/dashboard");
     }
     else if(login?.error){
       toast.error(login?.error);

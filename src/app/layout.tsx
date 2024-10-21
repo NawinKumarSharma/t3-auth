@@ -3,9 +3,10 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
-import { TRPCReactProvider } from "~/trpc/react";
 import ToastProvider from "~/providers/ToastProvider";
 import NextAuthSessionProvider from "~/providers/NextAuthSessionProvider";
+import { ThemeProvider } from "~/components/theme-provider";
+import { Navbar } from "~/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -19,12 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <ToastProvider />
-        <TRPCReactProvider>
+        {/* <ThemeProvider attribute="class" defaultTheme="dark" enableSystem> */}
+          <ToastProvider />
           <NextAuthSessionProvider>
-            {children}
+              {/* <Navbar /> */}
+              {children}
           </NextAuthSessionProvider>
-        </TRPCReactProvider>
+        {/* </ ThemeProvider> */}
       </body>
     </html>
   );

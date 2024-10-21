@@ -17,7 +17,7 @@ export async function POST(
       return new NextResponse("Missing data", {status: 500});
     }
 
-    const userAlreadyExist = await db.user.findFirst({
+    const userAlreadyExist = await db.user.findUnique({
         where: {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             email: email,
@@ -35,7 +35,7 @@ export async function POST(
       data: {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         email: email,
-        hashedPassword: hashedPassword,
+        password: hashedPassword,
       }
     });
 
